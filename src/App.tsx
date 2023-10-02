@@ -3,7 +3,7 @@ import { InputFieldMulti } from "./components/ui";
 function App() {
   return (
     <>
-      <InputFieldMulti />
+      <InputFieldMulti placeholder="paste some strings on the field." />
     </>
   );
 }
