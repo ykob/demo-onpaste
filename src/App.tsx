@@ -1,7 +1,11 @@
-import "./App.css";
+import { InputFieldMulti } from "./components/ui";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <InputFieldMulti />
+    </>
+  );
 }
 
 export default App;
