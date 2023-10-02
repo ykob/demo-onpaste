@@ -1,3 +1,4 @@
+import { CodeBlock } from "./CodeBlock";
 import { InputFieldMulti } from "./InputFieldMulti";
 
-export { InputFieldMulti };
+export { CodeBlock, InputFieldMulti };
