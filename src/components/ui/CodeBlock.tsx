@@ -5,6 +5,7 @@ type Props = React.ComponentProps<"pre">;
 export const CodeBlock = ({ children, className }: Props) => {
   const classNameComp = css`
     ${className}
+    overflow: auto;
     padding: 8px 12px;
     min-height: 120px;
     border-radius: 4px;

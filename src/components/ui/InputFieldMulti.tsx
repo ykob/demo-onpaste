@@ -1,8 +1,11 @@
 import { css } from "@emotion/css";
+import { useContext } from "react";
+import { ClipboardDataContext } from "../../contexts/clipboard-data-context";
 
 type Props = React.ComponentProps<"textarea">;
 
 export const InputFieldMulti = ({ children, className, ...props }: Props) => {
+  const { setClipboardData } = useContext(ClipboardDataContext);
   const classNameComp = css`
     ${className}
     padding: 8px 12px;
@@ -12,7 +15,15 @@ export const InputFieldMulti = ({ children, className, ...props }: Props) => {
   `;
 
   return (
-    <textarea className={classNameComp} {...props}>
+    <textarea
+      className={classNameComp}
+      {...props}
+      onPaste={(e) => {
+        const text = e.clipboardData.getData("text/html");
+        setClipboardData(text);
+        console.log(text);
+      }}
+    >
       {children}
     </textarea>
   );
