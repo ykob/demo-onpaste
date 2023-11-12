@@ -19,9 +19,22 @@ export const InputFieldMulti = ({ children, className, ...props }: Props) => {
       className={classNameComp}
       {...props}
       onPaste={(e) => {
-        const text = e.clipboardData.getData("text/html");
-        setClipboardData(text);
-        console.log(text);
+        const html = e.clipboardData.getData("text/html");
+
+        if (html) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const text = doc.body.innerText;
+          setClipboardData(text);
+          return;
+        }
+
+        const text = e.clipboardData.getData("text/plain");
+
+        if (text) {
+          setClipboardData(text);
+          return;
+        }
       }}
     >
       {children}
