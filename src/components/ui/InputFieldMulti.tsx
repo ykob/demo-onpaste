@@ -24,7 +24,7 @@ export const InputFieldMulti = ({ children, className, ...props }: Props) => {
         if (html) {
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, "text/html");
-          const text = doc.body.innerText;
+          const text = doc.body.innerHTML;
           setClipboardData(text);
           return;
         }
