@@ -6,6 +6,26 @@ type Props = React.ComponentProps<"textarea">;
 
 export const InputFieldMulti = ({ children, className, ...props }: Props) => {
   const { setClipboardData } = useContext(ClipboardDataContext);
+
+  const onPaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const html = e.clipboardData.getData("text/html");
+
+    if (html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const text = doc.body.innerHTML;
+      setClipboardData(text);
+      return;
+    }
+
+    const text = e.clipboardData.getData("text/plain");
+
+    if (text) {
+      setClipboardData(text);
+      return;
+    }
+  };
+
   const classNameComp = css`
     ${className}
     padding: 8px 12px;
@@ -15,28 +35,7 @@ export const InputFieldMulti = ({ children, className, ...props }: Props) => {
   `;
 
   return (
-    <textarea
-      className={classNameComp}
-      {...props}
-      onPaste={(e) => {
-        const html = e.clipboardData.getData("text/html");
-
-        if (html) {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
-          const text = doc.body.innerHTML;
-          setClipboardData(text);
-          return;
-        }
-
-        const text = e.clipboardData.getData("text/plain");
-
-        if (text) {
-          setClipboardData(text);
-          return;
-        }
-      }}
-    >
+    <textarea className={classNameComp} {...props} onPaste={onPaste}>
       {children}
     </textarea>
   );
